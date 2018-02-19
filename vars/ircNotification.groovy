@@ -6,7 +6,7 @@
 
 def call(String channel = '#rebuild-spam',
          String basenick = 'jenkins',
-				 String server = 'irc.ocf.berkeley.edu:6697') {
+         String server = 'irc.ocf.berkeley.edu:6697') {
     cleanJobName = JOB_NAME.replaceAll('[^a-zA-Z0-9_-]', '-')
     nick = "${basenick}-${cleanJobName}".take(32)
     result = currentBuild.result ?: 'SUCCESS'
