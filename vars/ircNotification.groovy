@@ -17,7 +17,7 @@ def call(String channel = '#rebuild-spam',
         echo USER ${nick} 8 * : ${nick}
         sleep 5
         echo "JOIN ${channel}"
-        echo "NOTICE ${channel} :${message}"
+        echo "PRIVMSG ${channel} :${message}"
         echo QUIT
         ) | openssl s_client -connect ${server}
     """
