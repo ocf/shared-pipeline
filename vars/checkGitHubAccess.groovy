@@ -18,7 +18,7 @@ final boolean isOrgMember(String user, String org, String credentialsId) {
             usernameVariable: 'GITHUB_USERNAME')
         ]) {
             final GitHub gh = new GitHubBuilder()
-                .withOAuthToken(env.GITHUB_PASSWORD, env.GITHUB_USERNAME)
+                .withPassword(env.GITHUB_USERNAME, env.GITHUB_PASSWORD)
                 .build()
 
             final GHUser ghUser = gh.getUser(user)
