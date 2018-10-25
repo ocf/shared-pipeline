@@ -2,7 +2,7 @@
  * A standard pipeline for an OCF package build
 */
 
-def parallelBuilds(Map dists) {
+Map parallelBuilds(Collection dists) {
     dists.collectEntries { dist ->
         [dist, {
             stage("build-${dist}") {
