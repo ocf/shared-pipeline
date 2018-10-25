@@ -69,7 +69,8 @@ def call(Map pipelineParams) {
             stage('parallel-builds') {
                 steps {
                     script {
-                        parallel parallelBuilds(pipelineParams.dists)
+                        def builds = parallelBuilds(pipelineParams.dists)
+                        parallel builds
                     }
                 }
             }
