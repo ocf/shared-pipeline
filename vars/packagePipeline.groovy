@@ -17,12 +17,19 @@ def parallelBuilds(Map dists) {
 
 def call(Map pipelineParams) {
     pipeline {
+        // TODO: Make this cleaner: https://issues.jenkins-ci.org/browse/JENKINS-42643
+        triggers {
+            upstream(
+                upstreamProjects: (env.BRANCH_NAME == 'master' ? pipelineParams.getOrDefault('upstreamProjects', []).join(',') : ''),
+                threshold: hudson.model.Result.SUCCESS,
+            )
+        }
+
         agent {
             label 'slave'
         }
 
         options {
-            ansiColor('xterm')
             timeout(time: 1, unit: 'HOURS')
             timestamps()
         }
@@ -39,7 +46,7 @@ def call(Map pipelineParams) {
                     // Get a coverall token from the parameters, but don't
                     // error if it doesn't exist (not all projects are using
                     // coveralls)
-                    COVERALLS_REPO_TOKEN = pipelineParams.get('coverallsToken')
+                    COVERALLS_REPO_TOKEN = credentials("${pipelineParams.getOrDefault('coverallsToken', 'default')}")
                 }
                 steps {
                     sh 'make test'
