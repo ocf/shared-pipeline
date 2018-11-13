@@ -55,7 +55,7 @@ def call(Map pipelineParams) {
                         }
                         steps {
                             script {
-                                sh 'make test'
+                                sh 'make -q test || if [ "$?" -ne "2" ]; then make test; fi'
                             }
                         }
                     }
