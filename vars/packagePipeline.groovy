@@ -49,7 +49,7 @@ def call(Map pipelineParams) {
                     COVERALLS_REPO_TOKEN = credentials("${pipelineParams.getOrDefault('coverallsToken', 'default')}")
                 }
                 steps {
-                    sh 'make test'
+                    sh 'make -q test || if [ "$?" -ne "2" ]; then make test; fi'
                 }
             }
 
