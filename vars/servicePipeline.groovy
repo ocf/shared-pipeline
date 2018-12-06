@@ -98,6 +98,10 @@ def call(Map pipelineParams) {
                         pipelineParams.deployTargets.each {
                             marathonDeployApp(it, version)
                         }
+
+                        if (fileExists('kubernetes')) {
+                            kubernetesDeployApp(version)
+                        }
                     }
                 }
             }
