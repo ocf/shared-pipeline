@@ -4,7 +4,7 @@
 */
 
 
-def call(String version) {
+def call(String app, String version) {
     withKubeConfig([credentialsId: 'kubernetes-deploy-token',
                     serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
     ]) {
@@ -14,7 +14,7 @@ def call(String version) {
             -v "${KUBECONFIG}":/kubeconfig:ro \
             -v "${PWD}"/kubernetes:/input:ro \
             -t docker.ocf.berkeley.edu/kubernetes-deploy \
-            "$JOB_NAME" "$version"
+            "$app" "$version"
         """
     }
 }
