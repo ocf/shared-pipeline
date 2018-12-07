@@ -15,7 +15,7 @@ def call(String app, String version) {
                 -e REVISION=${GIT_COMMIT} \
                 -v "${KUBECONFIG}":/kubeconfig:ro \
                 -v "$cwd"/kubernetes:/input:ro \
-                -t docker.ocf.berkeley.edu/kubernetes-deploy \
+                docker.ocf.berkeley.edu/kubernetes-deploy \
                 "$app" "$version"
             """
         }
