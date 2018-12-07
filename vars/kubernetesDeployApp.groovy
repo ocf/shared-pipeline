@@ -13,7 +13,7 @@ def call(String version) {
             -e REVISION=${GIT_COMMIT} \
             -v "${KUBECONFIG}":/kubeconfig:ro \
             -v "${PWD}"/kubernetes:/input:ro \
-            -it docker.ocf.berkeley.edu/kubernetes-deploy \
+            -t docker.ocf.berkeley.edu/kubernetes-deploy \
             "$JOB_NAME" "$version"
         """
     }
