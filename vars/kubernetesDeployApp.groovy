@@ -5,17 +5,19 @@
 
 
 def call(String app, String version) {
-    withKubeConfig([credentialsId: 'kubernetes-deploy-token',
-                    serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
-    ]) {
-        sh """
-            docker run \
-            -e REVISION=${GIT_COMMIT} \
-            -v "${KUBECONFIG}":/kubeconfig:ro \
-            -v "${PWD}"/kubernetes:/input:ro \
-            -t docker.ocf.berkeley.edu/kubernetes-deploy \
-            "$app" "$version"
-        """
+    ansiColor('xterm') {
+        withKubeConfig([credentialsId: 'kubernetes-deploy-token',
+                        serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
+        ]) {
+            sh """
+                docker run \
+                -e REVISION=${GIT_COMMIT} \
+                -v "${KUBECONFIG}":/kubeconfig:ro \
+                -v "$(pwd)"/kubernetes:/input:ro \
+                -t docker.ocf.berkeley.edu/kubernetes-deploy \
+                "$app" "$version"
+            """
+        }
     }
 }
 
