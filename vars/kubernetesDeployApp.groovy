@@ -5,7 +5,7 @@
 
 
 def call(String app, String version) {
-    ansiColor('xterm') {
+    ansiColor('vga') {
         withKubeConfig([credentialsId: 'kubernetes-deploy-token',
                         serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
         ]) {
@@ -15,7 +15,7 @@ def call(String app, String version) {
                 -e REVISION=${GIT_COMMIT} \
                 -v "${KUBECONFIG}":/kubeconfig:ro \
                 -v "$cwd"/kubernetes:/input:ro \
-                docker.ocf.berkeley.edu/kubernetes-deploy \
+                -t docker.ocf.berkeley.edu/kubernetes-deploy \
                 "$app" "$version"
             """
         }
