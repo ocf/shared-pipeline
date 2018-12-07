@@ -8,14 +8,14 @@ def call(String version) {
     withKubeConfig([credentialsId: 'kubernetes-deploy-token',
                     serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
     ]) {
-        sh '''
+        sh """
             docker run \
             -e REVISION=${GIT_COMMIT} \
-            -v \"${KUBECONFIG}\":/kubeconfig:ro \
-            -v \"${PWD}\"/kubernetes:/input:ro \
+            -v "${KUBECONFIG}":/kubeconfig:ro \
+            -v "${PWD}"/kubernetes:/input:ro \
             -it docker.ocf.berkeley.edu/kubernetes-deploy \
-            \"$JOB_NAME\" \"$version\"
-        '''
+            "$JOB_NAME" "$version"
+        """
     }
 }
 
