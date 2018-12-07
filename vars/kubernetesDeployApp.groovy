@@ -12,7 +12,7 @@ def call(String app, String version) {
             sh """
                 docker run \
                 -e REVISION=${GIT_COMMIT} \
-                -v "${KUBECONFIG}":/kubeconfig:ro \
+                -v "$KUBECONFIG":/kubeconfig:ro \
                 -v "$(pwd)"/kubernetes:/input:ro \
                 -t docker.ocf.berkeley.edu/kubernetes-deploy \
                 "$app" "$version"
