@@ -9,14 +9,8 @@ def call(String app, String version) {
         withKubeConfig([credentialsId: 'kubernetes-deploy-token',
                         serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
         ]) {
-            cwd = sh(script: 'pwd', returnStdout: true).trim()
             sh """
-                docker run \
-                -e REVISION=${GIT_COMMIT} \
-                -v "${KUBECONFIG}":/kubeconfig:ro \
-                -v "$cwd"/kubernetes:/input:ro \
-                -t docker.ocf.berkeley.edu/kubernetes-deploy \
-                "$app" "$version"
+                ocf-kubernetes-deploy "$app" "$version" "$cwd"/kubernetes
             """
         }
     }
