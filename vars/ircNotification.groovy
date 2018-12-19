@@ -19,6 +19,6 @@ def call(String channel = '#rebuild-spam',
         echo "JOIN ${channel}"
         echo "PRIVMSG ${channel} :${message}"
         echo QUIT
-        ) | openssl s_client -connect ${server}
+        ) | chronic openssl s_client -connect ${server}
     """
 }
