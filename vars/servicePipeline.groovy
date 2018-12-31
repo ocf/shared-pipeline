@@ -49,10 +49,11 @@ def call(Map pipelineParams) {
                 parallel {
                     stage('test') {
                         environment {
-                            // Get a coveralls token from the parameters, but
-                            // don't error if it doesn't exist (not all
-                            // projects are using coveralls)
+                            // Get a coveralls or codecov token from the
+                            // parameters, but don't error if it doesn't exist
+                            // (not all projects are using coveralls or codecov)
                             COVERALLS_REPO_TOKEN = credentials("${pipelineParams.getOrDefault('coverallsToken', 'default')}")
+                            CODECOV_REPO_TOKEN = credentials("${pipelineParams.getOrDefault('codecovToken', 'default')}")
                         }
                         steps {
                             script {
