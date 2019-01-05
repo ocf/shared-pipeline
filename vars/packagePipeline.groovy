@@ -20,7 +20,7 @@ def call(Map pipelineParams) {
         // TODO: Make this cleaner: https://issues.jenkins-ci.org/browse/JENKINS-42643
         triggers {
             upstream(
-                upstreamProjects: (env.BRANCH_NAME == 'master' ? pipelineParams.getOrDefault('upstreamProjects', []).join(',') : ''),
+                upstreamProjects: (env.BRANCH_NAME == 'master' ? pipelineParams.upstreamProjects?.join(',') : ''),
                 threshold: hudson.model.Result.SUCCESS,
             )
         }
