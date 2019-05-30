@@ -10,7 +10,7 @@ def call(String app, String version) {
                         serverUrl: 'https://kubernetes.ocf.berkeley.edu:6443'
         ]) {
             sh """
-                ocf-kubernetes-deploy "$app" "$version" ./kubernetes
+                ocf-kubernetes-deploy "$app" "$version"
             """
         }
     }
