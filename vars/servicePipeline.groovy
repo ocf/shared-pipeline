@@ -64,7 +64,7 @@ def call(Map pipelineParams) {
 
                     stage('cook-image') {
                         steps {
-                            sh 'make cook-image'
+                            sh 'make -q cook-image || if [ "$?" -ne "2" ]; then make cook-image; fi'
                         }
                     }
                 }
@@ -82,7 +82,7 @@ def call(Map pipelineParams) {
                     label 'deploy'
                 }
                 steps {
-                    sh 'make push-image'
+                    sh 'make -q push-image || if [ "$?" -ne "2" ]; then make push-image; fi'
                 }
             }
 
