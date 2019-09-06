@@ -32,6 +32,7 @@ def call(String org='ocf', String credentialsId='ocfbot') {
     if (!env.CHANGE_AUTHOR) {
         println "This doesn't look like a GitHub PR, continuing"
     } else if (!isOrgMember(env.CHANGE_AUTHOR, org, credentialsId)) {
+        ircMessage("Project ${JOB_NAME} (#${BUILD_NUMBER}): \u000309\u0002*Pending approval*\u000f: ${BUILD_URL}")
         input(
             message: "Trusted approval needed for change from ${env.CHANGE_AUTHOR}",
             submitter: 'authenticated'
