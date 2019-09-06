@@ -20,14 +20,5 @@ def call(String channel = '#rebuild-spam',
     }
 
     message = "Project ${JOB_NAME} (#${BUILD_NUMBER}): ${resultDisplay}: ${BUILD_URL}"
-    sh """
-        (
-        echo NICK ${nick}
-        echo USER ${nick} 8 * : ${nick}
-        sleep 5
-        echo "JOIN ${channel}"
-        echo "PRIVMSG ${channel} :${message}"
-        echo QUIT
-        ) | chronic openssl s_client -connect ${server}
-    """
+    ircMessage(message, nick, channel, server)
 }
