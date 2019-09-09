@@ -15,7 +15,7 @@ Map parallelBuilds(Collection dists) {
 }
 
 
-def call(Map pipelineParams) {
+def call(Map pipelineParams = [:]) {
     pipeline {
         // TODO: Make this cleaner: https://issues.jenkins-ci.org/browse/JENKINS-42643
         triggers {

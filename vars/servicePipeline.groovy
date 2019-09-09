@@ -3,7 +3,7 @@
 */
 
 
-def call(Map pipelineParams) {
+def call(Map pipelineParams = [:]) {
     String sha, version
 
     pipeline {
