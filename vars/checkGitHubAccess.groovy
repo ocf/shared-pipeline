@@ -14,11 +14,12 @@ final boolean isOrgMember(String user, String org, String credentialsId) {
     node {
         withCredentials([usernamePassword(
             credentialsId: credentialsId,
-            passwordVariable: 'GITHUB_PASSWORD',
+            passwordVariable: 'GITHUB_PAT',
             usernameVariable: 'GITHUB_USERNAME')
         ]) {
             final GitHub gh = new GitHubBuilder()
-                .withPassword(env.GITHUB_USERNAME, env.GITHUB_PASSWORD)
+                // This says "withOAuthToken, but it's actually a Personal Access Token
+                .withOAuthToken(env.GITHUB_PAT, env.GITHUB_USERNAME)
                 .build()
 
             final GHUser ghUser = gh.getUser(user)
