@@ -13,7 +13,12 @@ import org.kohsuke.github.GHGistBuilder
 import org.kohsuke.github.GitHub
 import org.kohsuke.github.GitHubBuilder
 
-def String call(String filename, String content, String credentialsId='ocfbot') {
+def String call(
+    String filename,
+    String content,
+    String description='',
+    String credentialsId='ocfbot'
+) {
     node {
         withCredentials([usernamePassword(
             credentialsId: credentialsId,
@@ -28,6 +33,8 @@ def String call(String filename, String content, String credentialsId='ocfbot') 
             GHGistBuilder gistBuilder = gh.createGist()
             // Add a file to the gist with the given filename and content
             gistBuilder = gistBuilder.file(filename, content)
+            // Add the description (if provided)
+            gistBuilder = gistBuilder.description(description)
             // Actually go and create the gist
             GHGist gist = gistBuilder.create()
             // Get a URL with which to refer to the new gist
