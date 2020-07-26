@@ -36,7 +36,8 @@ def call(Map pipelineParams = [:]) {
                     script {
                         sha = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                         version = "${new Date().format("yyyy-MM-dd-'T'HH-mm-ss")}-git${sha}"
-                        repo_name = env.JOB_BASE_NAME.split('/')[0]
+                        repo_name_tokens = env.JOB_NAME.split('/')
+                        repo_name = repo_name_tokens.length < 2 ? env.JOB_NAME : repo_name_tokens[repo_name_tokens.length - 2]
                     }
                 }
             }
