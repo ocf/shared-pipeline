@@ -118,7 +118,7 @@ def call(Map pipelineParams = [:]) {
 //                    ircNotification()
 //                }
 //            }
-        }
+//        }
     }
 }
 
