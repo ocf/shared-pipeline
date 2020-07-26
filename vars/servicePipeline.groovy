@@ -109,15 +109,15 @@ def call(Map pipelineParams = [:]) {
             }
         }
 
-        post {
-            failure {
-                emailNotification()
-            }
-            always {
-                node(label: 'slave') {
-                    ircNotification()
-                }
-            }
+//        post {
+//            failure {
+//                emailNotification()
+//            }
+//            always {
+//                node(label: 'slave') {
+//                    ircNotification()
+//                }
+//            }
         }
     }
 }
