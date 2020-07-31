@@ -102,9 +102,7 @@ def call(Map pipelineParams = [:]) {
                 emailNotification()
             }
             always {
-                node(label: 'slave') {
-                    ircNotification()
-                }
+                ircNotification()
             }
         }
     }
