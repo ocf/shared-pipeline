@@ -23,7 +23,7 @@ final boolean isOrgMember(String user, String org, String credentialsId) {
 
             final GHUser ghUser = gh.getUser(user)
             final GHOrganization ghOrg = gh.getOrganization(org)
-            return ghUser.isMemberOf(ghOrg) || (user == "pre-commit-ci")
+            return ghUser.isMemberOf(ghOrg) || (user == "pre-commit-ci[bot]")
         }
     }
 }
