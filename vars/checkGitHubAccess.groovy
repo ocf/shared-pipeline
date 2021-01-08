@@ -23,27 +23,36 @@ final boolean isOrgMember(String user, String org, String credentialsId) {
 
             final GHUser ghUser = gh.getUser(user)
             final GHOrganization ghOrg = gh.getOrganization(org)
-            return ghUser.isMemberOf(ghOrg) || (user == "pre-commit-ci[bot]")
+            return ghUser.isMemberOf(ghOrg)
         }
     }
 }
 
 def call(String org='ocf', String credentialsId='ocfbot') {
-    if (!env.CHANGE_AUTHOR) {
+    def author = env.CHANGE_AUTHOR
+
+    // These are bots that are not part of the ocf GitHub org, but we
+    // want to run tests on the pull requests they open anyway and
+    // trust them not to make pull requests trying to exploit Jenkins.
+    def allowedBots = ['pre-commit-ci[bot]', 'dependabot[bot]']
+
+    if (!author) {
         println "This doesn't look like a GitHub PR, continuing"
-    } else if (!isOrgMember(env.CHANGE_AUTHOR, org, credentialsId)) {
+    } else if (allowedBots.contains(author)) {
+        println "${author} is an allowed bot, continuing"
+    } else if (isOrgMember(author, org, credentialsId)) {
+        println "${author} is a trusted org member, continuing"
+    } else {
         ircMessage(
             "Project ${JOB_NAME} (#${BUILD_NUMBER}): " +
             "\u000309\u0002*Pending approval*\u000f, please add " +
-            "${env.CHANGE_AUTHOR} to the GitHub org if they are staff or " +
+            "${author} to the GitHub org if they are staff or " +
             "check if the PR is malicious before approving: ${BUILD_URL}"
         )
         input(
-            message: "${env.CHANGE_AUTHOR} is not in the GitHub org, check " +
+            message: "${author} is not in the GitHub org, check " +
                      "the PR contents and log in to approve the build",
             submitter: 'authenticated'
         )
-    } else {
-        println "${env.CHANGE_AUTHOR} is trusted, continuing"
     }
 }
