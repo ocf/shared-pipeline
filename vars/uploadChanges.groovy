@@ -5,7 +5,7 @@
 def call(String dist, String changesPath = '*.changes') {
     def job = JOB_NAME.replace('/', '/job/')
 
-    def allowedDists = ['stretch', 'buster']
+    def allowedDists = ['stretch', 'buster', 'bullseye', 'bookworm']
     if (!allowedDists.contains(dist)) {
         throw new Exception("Invalid distribution, must be in ${allowedDists}")
     }
